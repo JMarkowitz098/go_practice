@@ -1,0 +1,14 @@
+hello
+go
+0.29s    11077  https://golang.org
+0.32s     7298  https://godoc.org
+0.32s    61508  https://gamefaqs.gamespot.com/
+0.33s     4154  http://gopl.io
+330.336391ms elapsed
+
+0.20s    11077  https://golang.org
+0.22s    61509  https://gamefaqs.gamespot.com/
+0.23s     7298  https://godoc.org
+0.27s     4154  http://gopl.io
+272.763906ms elapsed
+

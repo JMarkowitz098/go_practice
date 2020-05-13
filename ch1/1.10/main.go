@@ -22,11 +22,27 @@ func main() {
 	for _, url := range os.Args[1:] {
 		go fetch(url, ch) // start a goroutine
 	}
-	for range os.Args[1:] {
-		fmt.Println(<-ch) // receive from channel ch
+
+	out, err := os.OpenFile("data", os.O_RDWR|os.O_APPEND|os.O_CREATE, os.FileMode(0666))
+	defer out.Close()
+
+	if err != nil {
+		ch <- fmt.Sprint(err) // send to channel ch
+		return
 	}
-	fmt.Printf("%.2fs elapsed\n", time.Since(start).Seconds())
+
+	for range os.Args[1:] {
+		_, err := out.WriteString(<-ch + "\n")
+		if err != nil {
+			ch <- fmt.Sprint(err) // send to channel ch
+			return
+		}
+	}
+	
+
+	out.WriteString(time.Since(start).String() + " elapsed\n\n")
 }
+
 
 func fetch(url string, ch chan<- string) {
 	start := time.Now()
@@ -44,6 +60,7 @@ func fetch(url string, ch chan<- string) {
 	}
 	secs := time.Since(start).Seconds()
 	ch <- fmt.Sprintf("%.2fs  %7d  %s", secs, nbytes, url)
+	
 }
 
-//!-
+	
