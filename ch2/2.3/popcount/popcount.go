@@ -8,6 +8,7 @@ func init() {
 		pc[i] = pc[i/2] + byte(i&1) 
 	}
 }
+
 // PopCount returns the population count (number of set bits) of x. 
 func PopCount(x uint64) int {
 	return int(pc[byte(x>>(0*8))] +
